@@ -1,9 +1,5 @@
 name: Build and Deploy to S3
 
-permissions:
-  id-token: write
-  contents: read
-
 on:
   push:
     branches:
@@ -12,6 +8,9 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout code
@@ -29,9 +28,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --follow-symlinks --exclude '.git/*' --exclude '.github/*' 
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          role-duration-seconds: 1200
+          role-session-name: GitHubActions
+      - name: Sync directory to S3
+        run: |
+            aws s3 sync build/ s3://${{ secrets.AWS_S3_BUCKET }}/ --delete --acl public-read
