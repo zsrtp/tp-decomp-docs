@@ -24,7 +24,7 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --follow-symlinks --exclude '.git/*' --exclude '.github/*' 
