@@ -1,0 +1,102 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+:root {
+  --bg-url: url(../../static/img/logo3_n.png);
+  --tp-white: #ffffd7;
+  --tp-ui-font: Arial;
+  --tp-hilight-color: #ffd900;
+}
+
+.font-calamity {
+  font-family: var(--tp-ui-font);
+}
+
+h1,
+h2,
+h4,
+.navbar__title,
+.footer__title {
+  font-family: var(--tp-ui-font);
+}
+
+html[data-theme='dark'] {
+  --ifm-color-primary: #ffd900;
+  --ifm-color-primary-dark: #e6c300;
+  --ifm-color-primary-darker: #d9b800;
+  --ifm-color-primary-darkest: #b39800;
+  --ifm-color-primary-light: #ffdd1a;
+  --ifm-color-primary-lighter: #ffdf26;
+  --ifm-color-primary-lightest: #ffe44d;
+  background: #111111;
+}
+
+:where([data-theme='dark']) {
+  --docusaurus-highlighted-code-line-bg: #282828 !important;
+}
+
+/* prevent the logo from showing up twice before rehydration */
+img[class^='themedImage--light'], img[class*=' themedImage--light'] {
+  display: none;
+}
+
+.navbar {
+  background: rgba(53, 55, 56, 1);
+  background-blend-mode: lighten;
+}
+
+.footer {
+  background: rgba(48, 56, 70, 0.6);
+  background-blend-mode: lighten;
+}
+
+.card {
+  background: rgba(53, 55, 56, 0.8);
+  background-blend-mode: lighten;
+}
+
+.text-hilight {
+  color: var(--tp-hilight-color);
+}
+
+html.container-tp-background {
+  background-image: var(--bg-url);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+html.container-tp-background .navbar {
+  background: rgba(48, 56, 70, 0.0);
+}
+
+html.container-tp-background .footer {
+  background: rgba(48, 56, 70, 0.2);
+}
+
+.aa-DetachedSearchButtonPlaceholder {
+  display: none;
+}
+
+.markdown>h2 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ffffff3f;
+}
+
+@media (max-width: 996px) {
+  .searchBox_node_modules-\@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module {
+    position: relative !important;
+    right: 0 !important;
+  }
+
+  .navbar__logo {
+    display: none;
+  }
+
+  .footer__col:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,105 @@
+---
+title: About this project
+sidebar_position: 0
+displayed_sidebar: null
+pagination_next: contribute/index
+---
+
+# Twilight Princess Decompilation
+
+## What is this?
+
+This is a reverse engineering project to produce a **matching** decompilation of *The Legend of Zelda: Twilight Princess*.
+
+:::caution Important note
+  This project does not contain game assets and as such **cannot** be used to play the game for free.
+:::
+
+Decompilation is the process of turning compiled code back into equivalent, human-readable source code.
+
+In the case of Twilight Princess, this means reading and understanding how the compiled code works, and then reconstructing compilable C++ source code.
+
+#### Matching decompilation
+
+A *matching* decompilation involves reconstructing source code that compiles to the exact same machine code as the original. This ensures that our reconstructed code functions identically to the original code.
+
+:::caution Important note
+  While decompilation can reconstruct a functionally equivalent executable, it cannot reproduce 100% identical source code. Information such as comments, project structure, variable names, etc. are lost in the compilation process. This information does not effect functionality, but it means our source code and project structure are surely different from the original.
+:::
+
+## Project goals
+
+Our long-term goal is to produce a highly documented and complete C++ codebase for every version of Twilight Princess. Having clear and readable source code will aid speedrunners, glitch hunters, and modders curious about how particular parts of the game work.
+
+Our primary goal is a full decompilation of the **GameCube USA** version with appropriate documentation. After this is achieved, we plan to decompile the other versions of the game. These versions include:
+
+- PAL GameCube
+- JPN GameCube
+- USA Wii 1.0
+- USA Wii 1.2
+- PAL Wii
+- JPN Wii
+- KOR Wii
+- USA Wii Demo
+- PAL Wii Demo
+- CHN Nvidia Shield
+- CHN Nvidia Shield Debug
+
+:::caution Reminder
+Porting the game to other platforms is **NOT** a goal of this project. This is strictly a reverse engineering project.
+:::
+
+## Frequently Asked Questions
+
+### What language was TP written in?
+
+Twilight Princess was originally written in C++ using the C++03 standard, which is compiled to PowerPC assembly; the language the GameCube and Wii uses.
+
+### What compiler was used?
+
+Metrowerks CodeWarrior, a standard C++ compiler for GameCube / Wii games.
+
+Versions 2.7 and 1.2.5 are the versions we currently use for the **GameCube USA** version, however further testing may eventually prove a different version was originally used.
+
+The Wii and Nvidia Shield versions likely use different compiler versions from the GameCube versions.
+
+### Why start with the GameCube USA version? Why not the debug version?
+
+This project was started by the Twilight Princess speedrunning community, and the most common version used within the community is GameCube USA. This will allow the speedrunning community to get the most benefit from the project while still in progress.
+
+The debug version is difficult to obtain and is known to be unstable. However, it offers much more insight into the code through debug strings, less aggressive function inlining, and extra debug tools, so we still reference the debug version a great amount during the decompilation process.
+
+### Can this be used for modding?
+
+Adding or changing things in the source code is currently experimentally supported! However as the project is still a work in progress, some changes may break the game, and much of the code remains as Assembly code. This means it may be a difficult environment to create complex mods in until the project is further along.
+
+### How can I help?
+
+Head over to the [contributing docs](/contribute) for more information about contributing to the project, including an FAQ for new contributors.
+
+<details>
+  <summary>Is this legally risky?</summary>
+
+Let us first say that we believe what we are doing to be legal &mdash; otherwise we would not be doing it (obviously).
+
+But just like other game decompilations, this project is in a legal gray zone.
+There are literally no legal precedents for this kind of work in any jurisdiction.
+Nevertheless, the authors of this project believe that it is unlikely to bother NCL for the following reasons:
+
+* Contributing to this project requires owning the game on a GameCube or Wii console and dumping the executable.
+* This project is completely useless to anybody who does not have the game.
+    * It cannot be used to play the game.
+    * It does not give you any useful knowledge if you do not play the game or if you do not even have it.
+* This project is only about the executable.
+* This project does not use any proprietary SDK or any leaked document at all.
+    * Anyone who has had access to leaked information about TP or the GameCube / Wii SDK is not allowed to contribute.
+
+#### Why not do a clean room reimplementation to minimise risk?
+
+This is a large game so matching decompilation is the only realistic way of ensuring any reimplementation is fully accurate to the original logic.
+
+Clean room design (i.e. having separate teams doing reverse engineering and implementation work) is not a solution when the goal is to follow the original logic as accurately as possible. Especially not with our current manpower.
+
+And even if it were, clean room design is not an bulletproof legal defense and does not prevent frivolous litigation.
+
+</details>
