@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
       - name: Install dependencies and build
         run: |
           yarn install
@@ -24,7 +24,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-2
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN}}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-skip-session-tagging: true
           role-duration-seconds: 3600
           role-session-name: GitHubActions
