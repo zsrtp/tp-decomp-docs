@@ -13,10 +13,15 @@ Following tools will be needed for the project:
 * Python 3.6 or newer
 * Make (which is included in build-essential in Linux/WSL2)
 
-If you are using a distribution under Linux or WSL2, we highly recommend also installing:
+If you are using a distribution under Linux or WSL2, we highly recommend also installing one of these tools:
 
-* [Wine](https://discord.com/channels/688807550715560050/749052938282074153/1083148488596013066) for speeding up the compiling process (See the link for installing)
-* [Wibo](https://github.com/decompals/wibo) for speeding up the process even more
+* Wine for speeding up the compiling process
+
+OR
+
+* [WiBo](https://github.com/decompals/wibo) for speeding up the process even more
+
+You can install either Wibo or Wine but you should only install one of them. We recommend to install WiBo because it is faster in building.
 
 If you are on MacOS (only intel-based ones), only install: 
 
@@ -26,7 +31,12 @@ Linux/WSL2:
 ```shell
 sudo apt install build-essential python3
 ```
-
+And if you chose to install Wine instead of WiBo:
+```shell
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install wine wine32
+```
 MacOS:
 ```shell
 brew install python
@@ -68,6 +78,11 @@ Example:
 ```shell
 make game -j8
 ```
+NOTE: To actually make use of wibo (if installed), you would need to execute the Makefile like this:
+```shell
+make game WINE=wibo
+```
+Where you can and should of course use the `-j#` argument too (before WINE=wibo)
 
 2. Create the Expected directory (for diffing asm functions via diff.py):
 ```shell
