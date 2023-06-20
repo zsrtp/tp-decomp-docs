@@ -6,4 +6,126 @@ sidebar_position: 0
 
 Follow these steps to set up the project.
 
+## Set Up Dependencies
 
+Following tools will be needed for the project:
+
+* Python 3.6 or newer
+* Make (which is included in build-essential in Linux/WSL2)
+
+If you are using a distribution under Linux or WSL2, we highly recommend also installing one of these tools:
+
+* Wine for speeding up the compiling process
+
+OR
+
+* [WiBo](https://github.com/decompals/wibo) for speeding up the process even more
+
+You can install either Wibo or Wine but you should only install one of them. We recommend to install WiBo because it is faster in building.
+
+If you are on MacOS (only intel-based ones), only install: 
+
+* Wine (Install it with the MacOS step below)
+
+Linux/WSL2:
+```shell
+sudo apt install build-essential python3
+```
+And if you chose to install Wine instead of WiBo:
+```shell
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install wine wine32
+```
+MacOS:
+```shell
+brew install python
+```
+```shell
+xcode-select --install
+```
+```shell
+brew cask install wine-stable
+```
+
+## Setting Up The Repository
+
+1. Clone the repository and switch to it by running:
+```shell
+git clone https://github.com/zeldaret/tp.git && cd tp 
+```
+
+2. Place your copy of NTSC-U GCN Twilight Princess in the root directory and call it `gz2e01.iso`
+
+3. You will need specific python modules which can be installed with following command:
+```shell
+python3 -m pip install --user -r tools/requirements.txt
+```
+
+4. Execute tp.py with the setup argument like this:
+```shell
+./tp setup
+```
+
+## Building The Game
+
+1. To build a playable game, run:
+```shell
+make game
+```
+NOTE: You can add the `-j#` argument where # is the amount of threads your system has in order to greatly speed up build times
+Example:
+```shell
+make game -j8
+```
+NOTE: To actually make use of wibo (if installed), you would need to execute the Makefile like this:
+```shell
+make game WINE=wibo
+```
+Where you can and should of course use the `-j#` argument too (before WINE=wibo)
+
+2. Create the Expected directory (for diffing asm functions via diff.py):
+```shell
+./tp expected
+```
+
+### Extra Informations About The Makefile
+
+```shell
+make
+``` 
+For only building the dol
+
+```shell
+make rels
+``` 
+For only building the rels
+
+```shell
+make assets
+``` 
+For only extracting the assets
+
+```shell
+make clean
+``` 
+For only deleting the finished dol
+
+```shell
+make clean_rels
+``` 
+For only deleting the finished rels
+
+```shell
+make clean_game
+``` 
+For deleting the game directory
+
+```shell
+make clean_all
+``` 
+For deleting the whole build directory
+
+## Problems?
+
+You can always ask for help on the [Zelda Decompilation Discord server](https://discord.zelda64.dev/) in the #tp-decomp channel!
