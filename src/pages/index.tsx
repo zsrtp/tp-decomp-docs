@@ -41,7 +41,7 @@ export default function Index() {
               </Link>
             </Block>
 
-            <Block title="I want to help">
+            <Block title="I want to help!!!">
               <p>We gladly accept contributions! This is a group effort and every contribution helps.</p>
 
               <Link
