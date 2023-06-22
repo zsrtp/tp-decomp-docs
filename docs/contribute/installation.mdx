@@ -21,7 +21,7 @@ OR
 
 * [WiBo](https://github.com/decompals/wibo) for speeding up the process even more
 
-You can install either Wibo or Wine but you should only install one of them. We recommend to install WiBo because it is faster in building.
+You can install either WiBo or Wine but you should only install one of them. We recommend to install WiBo because it is faster in building.
 
 If you are on MacOS (only intel-based ones), only install: 
 
@@ -34,9 +34,14 @@ sudo apt install build-essential python3
 And if you chose to install Wine instead of WiBo:
 ```shell
 sudo dpkg --add-architecture i386
+```
+```shell
 sudo apt-get update
+```
+```shell
 sudo apt-get install wine wine32
 ```
+
 MacOS:
 ```shell
 brew install python
@@ -73,12 +78,12 @@ python3 -m pip install --user -r tools/requirements.txt
 ```shell
 make game
 ```
-NOTE: You can add the `-j#` argument where # is the amount of threads your system has in order to greatly speed up build times
+NOTE: You can add the `-j#` argument where # is the amount of threads your system has in order to greatly speed up build times.
 Example:
 ```shell
 make game -j8
 ```
-NOTE: To actually make use of wibo (if installed), you would need to execute the Makefile like this:
+NOTE: To actually make use of WiBo (if installed), you would need to execute the Makefile like this:
 ```shell
 make game WINE=wibo
 ```
@@ -90,6 +95,9 @@ Where you can and should of course use the `-j#` argument too (before WINE=wibo)
 ```
 
 ### Extra Informations About The Makefile
+:::caution
+These informations do NOT apply to the installation setup!
+:::
 
 ```shell
 make
