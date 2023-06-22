@@ -28,7 +28,7 @@ export default function Index() {
       </Head>
       <header className={styles.heroBanner}>
         <div className="container">
-          <h2 className="hero__title">Twilight Princess Decomp</h2>
+          <h2 className="hero__title">Twilight Princess Decompilation</h2>
 
           <div className="row">
             <Block title="What is this?">

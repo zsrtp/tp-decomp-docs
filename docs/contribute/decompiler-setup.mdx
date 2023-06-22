@@ -1,0 +1,59 @@
+---
+title: Decompiler Setup
+description: How to set up the decompiler
+sidebar_position: 1
+---
+
+Now that the project repository is set up, it is time to set up the **decompiler** which is necessary to reverse engineer the executable.
+
+:::info Decompiler
+The decompiler is a program that translates assembly instructions into pseudocode (code that attempts to look like source code).
+:::
+
+The decompiler used by our team is **Ghidra** in which we have a server to share the projects.
+
+But first of all, we will start with setting up a new user account to access the Ghidra server later on.
+
+## Setting Up The User
+
+1. In order to add a new user, go to the [TP-Ghidra-Server-Repository](https://github.com/zsrtp/tp-ghidra-server) and fork it 
+
+2. In your fork, edit the `users.yaml` file and add your wished username with read-only permsissions based on the same structure like other users for now. Your permissions can get changed later.
+
+3. Open a pull request against the upstream repository so that an admin can approve and merge it later on. At that point, your user account is set up.
+
+The default password of the new user will be **changeme** and will expire after 24 hours. After your first login (which will happen later on), you will be prompted to change your password. If you can't change it in that time, dm **Pheenoh** so he could reset your password. 
+
+## Installing OpenJDK
+
+OpenJDK is an official and free implementation of the Java Platform and Ghidra needs it in order to open up.
+
+Install one of the [OpenJDK 17](https://adoptium.net/de/temurin/releases/) versions depending on the platform you use and execute the respective installation wizard.
+
+## Setting Up Ghidra
+
+As mentioned above, **Ghidra** is a decompiler that can translate assembly instructions into some sort of pseudocode in order for us to rewrite that pseudocode into actual C++ code that matches the binary of Twilight Princess.
+
+1. Download [Ghidra](https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.2.2_build/ghidra_10.2.2_PUBLIC_20221115.zip). This version (10.2.2) is one of a few versions that can connect to the server.
+
+2. Extract the zip-file and launch Ghidra by either running `./ghidraRun` inside a terminal or executing `ghidraRun.bat` (if you are on Windows).
+
+3. Download the [Ghidra-GameCube-Loader](https://github.com/Cuyler36/Ghidra-GameCube-Loader/releases/download/1.1.5_1/GameCubeLoader-1.1.5-6410e2f-Ghidra_10.2.2.zip) and follow the [Installation Instructions](https://github.com/Cuyler36/Ghidra-GameCube-Loader/blob/master/README.md) in the README.
+
+4. After opening Ghidra and activating the Ghidra-GameCube-Loader, go to `File -> New Project...`. Click on `Shared Project` and use the information below in order to login with your new user. After logging in, change your password as prompted.
+```
+hostname:  ghidra.tpgz.io
+port:      13100
+username:  <your_username>
+password:  changeme
+```
+
+5. This is a list of the projects:
+
+![Ghidra Window](../../static/img/ghidra.png)
+
+The only project you need to download is `tp_gcn_usa_1.0`. We highly recommend to also download `tp_shield_chn_debug_new` as it offers much more insight into the code through debug strings, less aggressive function inlining, and extra debug tools.
+
+## Problems?
+
+You can always ask for help on the [Zelda Decompilation Discord server](https://discord.zelda64.dev/) in the #tp-decomp channel!

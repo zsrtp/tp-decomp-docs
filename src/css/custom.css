@@ -1,11 +1,5 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
 :root {
-  --bg-url: url(../../static/img/logo3_n.png);
+  --bg-url: url(../../static/img/website_background.png);
   --tp-white: #ffffd7;
   --tp-ui-font: Arial;
   --tp-hilight-color: #ffd900;
@@ -39,18 +33,27 @@ html[data-theme='dark'] {
 }
 
 /* prevent the logo from showing up twice before rehydration */
-img[class^='themedImage--light'], img[class*=' themedImage--light'] {
+img[class^='themedImage--light'],
+img[class*=' themedImage--light'] {
   display: none;
 }
 
 .navbar {
-  background: rgba(53, 55, 56, 1);
+  background: rgba(100, 111, 130, 0.2);
   background-blend-mode: lighten;
+  background-image: url(../../static/img/website-footer-nav-bar.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 .footer {
-  background: rgba(48, 56, 70, 0.6);
+  background: rgba(100, 111, 130, 0.2);
   background-blend-mode: lighten;
+  background-image: url(../../static/img/website-footer-nav-bar.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 .card {
@@ -67,6 +70,7 @@ html.container-tp-background {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center center;
+  background-size: cover;
 }
 
 html.container-tp-background .navbar {
@@ -74,7 +78,7 @@ html.container-tp-background .navbar {
 }
 
 html.container-tp-background .footer {
-  background: rgba(48, 56, 70, 0.2);
+  background: rgba(100, 111, 130, 0.2);
 }
 
 .aa-DetachedSearchButtonPlaceholder {
