@@ -3,10 +3,11 @@
 }
 
 .container {
-  flex: 1;
+  flex: 0;
   align-self: center;
   margin: 0 auto;
   max-width: 1000px;
+  width: 100%;
 
   background-color: #0000005f;
   padding: 2em 2em;
