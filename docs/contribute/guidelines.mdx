@@ -1,0 +1,132 @@
+---
+title: Coding Guidelines
+description: Guidelines for writing code
+sidebar_position: 2
+---
+
+This project aims to be as readable and easy-to-understand as is possible towards the average programmer. As such, it is important to us that the coding style is kept consistent and clean across the entire project.
+
+To make things easier, we use clang format to automatically enforce a consistent style for the majority of formatting issues. Before opening a pull-request, it is highly recommended to run `clang-format` on your changes.
+
+:::info Note
+If you're using VSCode, you can format the current open file by either right-clicking and selecting `Format Document` or pressing <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd>.
+:::
+
+Clang Format will take care of most style choices, however there are other styling guidelines that you will have to follow manually. Please read below to see the full list of style guidelines.
+
+## General
+
+- Lines should not be longer than 100 characters.
+- Use 4 spaces to indent.
+- Use spaces with operators and keywords:
+  - :heavy_check_mark: `if (x == 1 || x == 2)`
+  - :x: `if(x==1||x==2)`
+- Avoid useless parentheses:
+    - :heavy_check_mark: `if (x == 1 || x == 2)`
+    - :x: `if ((x == 1) || (x == 2))`
+        <br /> The extra parenthesis don't change functionality or help readability, so should be removed.
+    - :heavy_check_mark: `if ((foo && bar) || (x && y))`
+    - :x: `if (foo && bar || x && y)`
+        <br /> The parenthesis here aren't necessary, but improve readability due to operator precedence not being immediately obvious.
+- Declare variables close to their usage point when possible.
+- Do not use `this->` with member variables unless it's absolutely necessary.
+
+## Includes
+
+- Avoid unnecessary includes. Foward declaring types where possible will reduce compile times.
+
+## Names
+
+The most important thing about naming is that names should follow as close to the style in the original code as possible. The majority of type names are known thanks to TP's symbol map, and the TP debug version contains strings that sometimes reveal the original names for variables, parameters, and more. If these names are available, they should be used. If they are not, you can follow the guide below:
+
+- In cases where type names are unknown, follow the naming conventions used within the same file it's located in.
+  - Example: A struct needed in `d_stage` doesn't have a name, but the `d_stage` name convention can be seen in `dStage_startStage_c`, so this unnamed struct can be named `dStage_someStructName`.
+  - Manually named classes should have a `_c` suffix, while structs should not.
+
+- Member variables of structs / classes should be prefixed with `m` and use UpperCamelCase. If the data is a pointer, use the prefix `mp`.
+  - `int mData;`
+  - `int* mpData;`
+
+- Static variables should be prefixed with `s_` and global variables with `g_`.
+  - `static int s_someStaticVar;`
+  - `extern int g_someGlobalVar;`
+
+- In-function variables should be lower_snake_case.
+  - `int local_var = 0;`
+
+- Function parameters should be lowerCamelCase prefixed with `i_`.
+  - `void someFunc(int i_foo, int i_bar) {}`
+
+## Comments
+
+### General
+Comments should be used sparingly; only used where they serve a useful purpose. Code that is obvious does not need a comment explaining what it does.
+
+- Comments should all be prefixed with 2 spaces, with a following space before the text.
+  - `some_code_here; ㅤ// comment text here`
+
+- If a comment is short, it may be placed to the right of a line. If a comment is longer, place it above the line it refers to.
+
+```cpp
+  if (x == 0 && y == 1)  // short comment
+
+  // a longer comment would go here.....
+  if (x == 0 && y == 1)
+```
+
+- Longer form documentation comments can use block comments
+```cpp
+/**
+ * Documentation
+ * Documentation
+ * Documentation
+ */
+void someFunc() { ... }
+```
+
+### Offsets
+Member variables should have data offsets commented to the left of the name. This is extremely useful for debugging issues with data placement and for research.
+
+```cpp
+class ClassName_c {
+public:
+	/* 0x0 */ u8 mVarA;
+	/* 0x4 */ f32 mVarB;
+	/* 0x8 */ int mVarC;
+	/* 0xC */ s16 mVarD;
+};
+```
+
+Make sure that offsets are commented with padding zeroes to the largest size needed to have all comments properly aligned. If an offset contains a letter, make sure it is capitalized.
+```cpp
+class ClassName_c {
+public:
+	/* 0x00 */ u64 mVarA;
+	/* 0x08 */ s16 mVarB;
+	/* 0x0A */ s16 mVarC;
+	/* 0x10 */ u16 mVarD;
+};
+```
+
+Padding data should be implicit (not written), so make sure that you correctly note the offset of where each member variable is.
+For reference
+- `u8 / s8 / bool` are aligned to 1 byte
+- `s16 / u16` are aligned to 2 bytes
+- `int / unsigned int / s32 / u32 / f32` are aligned to 4 bytes
+- `pointers` are aligned to 4 bytes
+- `s64 / u64 / f64` are aligned to 8 bytes
+
+This just means that each variable must be at an offset that is a multiple of its size. The total size of the class will be aligned to the largest used type within the class.
+```cpp
+class ClassName_c {
+public:
+    /* 0x00 */ u8 mVarA;
+    /* 0x04 */ f32 mVarB;  // at offset 0x4, because f32 is aligned to 4
+    /* 0x08 */ u8 mVarC;  
+    /* 0x0A */ s16 mVarD;  // at offset 0xA because s16 is aligned to 2
+    /* 0x10 */ f64 mVarE;  // at offset 0x10 because f64 is aligned to 8
+    /* 0x18 */ u8 mVarF;
+};  // Size: 0x20
+  
+// (Size is 0x20 because the class is aligned to the largest used type, which is f64 in this case)
+```
