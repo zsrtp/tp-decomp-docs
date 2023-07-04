@@ -43,7 +43,7 @@ export default function Progress() {
       const entries = await progressUtils.loadEntries();
       setEntries(entries);
 
-      const last = entries[entries.length - 1];
+      const last = entries[0];
 
       setTotalCode(`${formatSizeAsMb(last.total_code.count)}/${formatSizeAsMb(last.total_code.size)} MB - ${formatProgress(last.total_code.count, last.total_code.size)}`);
       setDol(`${formatSizeAsMb(last.dol.count)}/${formatSizeAsMb(last.dol.size)} MB - ${formatProgress(last.dol.count, last.dol.size)}`);
