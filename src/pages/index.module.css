@@ -19,6 +19,11 @@
   color: var(--tp-white);
 }
 
+.heroBanner :global .hero__title a:hover {
+  text-decoration: underline;
+  text-decoration-color: yellow;
+}
+
 .heroBanner :global .button {
   background-color: var(--tp-white);
 }
