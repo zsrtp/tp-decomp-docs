@@ -15,6 +15,7 @@ export type Entry = {
 };
 
 const PROGRESS_JSON_PATH = 'https://progress.deco.mp/data/twilightprincess/gcn_usa/?mode=all';
+const LATEST_PROGRESS_JSON_PATH = 'https://progress.deco.mp/data/twilightprincess/gcn_usa/default/?mode=shield&measure=code'
 
 export async function loadEntries(): Promise<Entry[]> {
   const res = await fetch(PROGRESS_JSON_PATH);
@@ -54,7 +55,7 @@ export async function loadEntries(): Promise<Entry[]> {
 }
 
 export async function getCurrentProgressText(): Promise<string> {
-  const res = await fetch(PROGRESS_JSON_PATH).then(res => res.json());
+  const res = await fetch(LATEST_PROGRESS_JSON_PATH).then(res => res.json());
   return res.message;
 }
 

@@ -9,7 +9,7 @@ const DISCORD_URL = 'https://discord.zelda64.dev';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Twilight Princess Decompilation',
-  tagline: '--tagline--',
+  tagline: 'An ongoing reverse engineering project to reimplement the executable of Twilight Princess',
   url: 'https://zsrtp.github.io',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
