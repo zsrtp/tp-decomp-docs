@@ -32,7 +32,7 @@ export default function Index() {
         <div className="container">
           <h2 className="hero__title" title="Current decompilation progress">
             <Link to="/progress">
-            <span className="text-hilight">{progressText.data || "??.???%"}</span>
+            <span className="text-hilight">{progressText.data || "??.??%"}</span>
             </Link>
           </h2>
           <div className="row">
