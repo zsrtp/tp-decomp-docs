@@ -5,7 +5,7 @@
 .container {
   flex: 0;
   align-self: center;
-  margin: 0 auto;
+  margin: 125px auto;
   max-width: 1000px;
   width: 100%;
 
