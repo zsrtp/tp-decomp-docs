@@ -127,8 +127,8 @@ export default function Progress() {
       <div className={styles.container}>
         <h1>Decompilation Progress</h1>
         <InfoRow title="Total Code" value={totalCode} />
-        <InfoRow title="main.dol" value={dol} />
-        <InfoRow title="RELs" value={rels} />
+        <InfoRow title="main.dol" value={dol} secondLevel />
+        <InfoRow title="RELs" value={rels} secondLevel />
         <div className="chart-container" style={{ marginTop: 30, minHeight: 300 }}>
           {chartData && (
             <Chart
