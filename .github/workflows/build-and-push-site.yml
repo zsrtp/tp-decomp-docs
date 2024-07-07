@@ -14,22 +14,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
+        uses: actions/setup-node@v4
       - name: Install dependencies and build
         run: |
           yarn install
           yarn build
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
-          role-duration-seconds: 1200
-          role-session-name: GitHubActions
       - name: Sync directory to S3
         run: |
             aws s3 sync build/ s3://${{ secrets.AWS_S3_BUCKET }}/ --delete --acl public-read
