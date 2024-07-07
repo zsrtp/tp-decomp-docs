@@ -18,31 +18,26 @@ To access the shared Ghidra project, we will first start with setting up a new u
 
 ## Setting up a Ghidra account
 
-1. To create a new Ghidra server user, first go to the [TP Ghidra Server Repository](https://github.com/zsrtp/tp-ghidra-server) and fork it 
+1. Go to ghidra.decomp.dev and link your Discord account.
 
-2. In your fork, edit the `users.yaml` file and add your desired username / permissions. If you're unsure of what permissions to choose, use `read-only`. If you require write access, contact Pheenoh or Taka to ask permission.
+![](../../static/img/discord-signin.png)
+![](../../static/img/discord-auth.png)
 
-3. Open a pull request to the main repository so that an admin can approve and merge it. At this point, your user account is set up.
+2. Request access to the TwilightPrincess server.
 
-The default password of the new user will be `changeme` and will expire after 24 hours. After your first login, you will be prompted to change your password. If you have issues logging into your account, contact **Pheenoh** to reset your password. 
+![](../../static/img/ghidra-request-access.png)
 
 ## Setting Up Ghidra
 
 1. To use Ghidra, you will need to first install JDK. Install one of the [OpenJDK 17](https://adoptium.net/de/temurin/releases/) versions depending on the platform you use and follow the installation wizard.
 
-2. Download [Ghidra 10.2.2](https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.2.2_build/ghidra_10.2.2_PUBLIC_20221115.zip). The version used is important, as incompatible versions will not be able to load the Ghidra project.
-
-:::info Note
-Alternatively, you can use the [custom Ghidra builds](https://rootcubed.dev/ghidra_builds/) created by `RootCubed`. They feature a few changes suited to GameCube decompilation that are not implemented in the main Ghidra builds yet.
-:::
+2. Download the latest [RootCubed Ghidra](https://github.com/encounter/ghidra-ci/releases) build. Make sure you download `GameCubeLoader` artifact as well.
 
 3. Extract the zip-file and launch Ghidra by either running `./ghidraRun` inside a terminal or executing `ghidraRun.bat` (if you are on Windows).
 
-4. Download the [Ghidra-GameCube-Loader](https://github.com/Cuyler36/Ghidra-GameCube-Loader/releases/download/1.1.5_1/GameCubeLoader-1.1.5-6410e2f-Ghidra_10.2.2.zip) and follow the [Installation Instructions](https://github.com/Cuyler36/Ghidra-GameCube-Loader/blob/master/README.md) in the README. (Ensure that the loader version is compatible with your Ghidra version.)
-
 5. After opening Ghidra and activating the Ghidra-GameCube-Loader, go to `File -> New Project...`. Click on `Shared Project` and use the information below in order to login with your new user. After logging in, change your password as prompted.
 ```
-hostname:  ghidra.tpgz.io
+hostname:  ghidra.decomp.dev
 port:      13100
 username:  <your_username>
 password:  changeme
@@ -52,7 +47,7 @@ You should now be able to view the available projects
 
 ![Ghidra Window](../../static/img/ghidra.png)
 
-You will want to checkout `tp_gcn_usa_1.0` for working on decompilation. We also highly recommend checking-out `tp_shield_chn_debug_new` as it offers much more insight into the code through debug strings, less aggressive function inlining, and extra debug tools.
+You will want to checkout `gcn_usa` for working on decompilation. We also highly recommend checking-out `tp_shield_chn_debug_new` as it offers much more insight into the code through debug strings, less aggressive function inlining, and extra debug tools.
 
 ## Using Ghidra
 
