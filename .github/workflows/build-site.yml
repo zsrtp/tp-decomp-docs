@@ -1,0 +1,23 @@
+name: Build and Deploy to S3
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+      - name: Install dependencies and build
+        run: |
+          yarn install
+          yarn build
