@@ -1,0 +1,124 @@
+---
+title: Workflow
+description: General project workflow
+sidebar_position: 2
+---
+
+Here we'll go over the general workflow for decompiling code and how you should be using the essential tools effectively. Note that this is just a general guide, you may choose to work however works best for you.
+
+One extremely important point to drive home early on is that you should be **LOOKING AT THE DEBUG ROM!!!**
+The debug rom (shield_chn_debug in ghidra) is special in that it was compiled without optimizations or inlining, which means it exposes much more info about how a function was originally written than the retail versions offer.
+
+You should always be simultaneously looking at both the retail and debug versions in ghidra to get a proper idea of what the decompiled code should look like. If you are unsure of anything, please ask in the ZeldaRET discord for advice.
+
+## Choosing a file
+First off you'll want to pick a file (more accurately called a Translation Unit or TU) that you want to work on.
+
+`d_a_obj_*.cpp` TUs tend to be smaller and easier so they're good choices when starting out, however you may pick anything that interests you.
+
+You can check out our [GitHub Projects](https://github.com/zeldaret/tp/projects?query=is%3Aopen) to see what TUs have already been finished or are in progress to make sure you're not overlapping with anyone else
+
+## Setting up classes/structs
+After you pick a file to work on, you'll want to setup the necessary classes/structs as best as possible before diving into decompiling code. For actor TUs, this will usually mean setting up the primary actor-specific classes/structs.
+
+This will generally consist of looking through all the functions that use a given class/struct within ghidra and figuring out what data types belong at which offset within the struct. Looking at class constructors (particularly within the debug rom) can give away many of the data types that belong in a class.
+
+Here is a guide covering the basics of using ghidra to figure out data structures.
+<iframe height="315" width="560" src="https://www.youtube.com/embed/fMQ_Thv93Ws" allowfullscreen="true"/>
+
+## Decompiling functions
+The process of decompiling functions most simply consists of looking at ghidra pseudocode for a function and translating it into actual compilable C++ code within the project. The ghidra pseudocode is often quite rough and may struggle to accurately represent what the assembly code is doing. You will need to manually cleanup these issues and decipher what the actual structure of the code should be.
+
+Looking at the debug rom is crucial here to ensure you can cleanup the code as much as possible. In many instances the debug rom reveals information about the function that helps match the retail code that would be very difficult to figure out otherwise. Therefore it's most recommended to look at both the debug and retail versions of the function simulataneously to get the full picture.
+
+There is an alternative decompiler [m2c](https://simonsoftware.se/other/mips_to_c.py) that in certain cases may offer better output than ghidra. However this decompiler is primarily suited for C code, so it's output quality may vary for our project. You can find the assembly code to paste into m2c in the `build/GZ2E01` folder.
+
+Once you've finished attempting to decompile the function, you'll find the corresponding function in Objdiff and check whether your decompilation attempt matches. If it doesn't match, you'll select the function and try to fix the issues you see present.
+
+Here is a basic introductory guide to getting started decompiling functions. It is slightly outdated as of October 2024, however most information still applies.
+<iframe height="315" width="560" src="https://www.youtube.com/embed/0IPvRahaJTs" allowfullscreen="true"/>
+
+## Cleanup
+After finishing your function decompilation attempts, you'll want to cleanup the TU to remove unnecessary parts, ensure data and functions are in the correct order, and (optionally) name variables appropriately.
+
+There's many parts of the TU that are not strictly necessary and were only there originally to help with building correctly. After successfully decompiling the file, these parts may be removed as they're unneeded anymore. Some examples of this are:
+
+Externs: 
+```cpp
+extern "C" void __ct__10fopAc_ac_cFv();
+extern "C" void __dt__10fopAc_ac_cFv();
+extern "C" u8 now__14mDoMtx_stack_c[48];
+```
+
+Force Active Pragmas:
+```cpp
+#pragma push
+#pragma force_active on
+...
+#pragma pop
+```
+
+Stringbases:
+```cpp
+SECTION_DEAD static char const* const stringBase_80AB2120 = "";
+SECTION_DEAD static char const* const stringBase_80AB2121 = "DEFAULT_GETITEM";
+SECTION_DEAD static char const* const stringBase_80AB2131 = "NO_RESPONSE";
+```
+
+Vtables:
+```cpp
+SECTION_DATA extern void* __vt__11J3DTexNoAnm[3] = {
+    (void*)NULL /* RTTI */,
+    (void*)NULL,
+    (void*)calc__11J3DTexNoAnmCFPUs,
+};
+```
+
+Literals:
+```cpp
+SECTION_RODATA static f32 const lit_4041 = 150.0f;
+COMPILER_STRIP_GATE(0x80AB20AC, &lit_4041);
+
+SECTION_DATA static void* lit_5334[13] = {
+    (void*)(((char*)cutHaveFavorToAsk__13daNpc_Pouya_cFi) + 0x454),
+    (void*)(((char*)cutHaveFavorToAsk__13daNpc_Pouya_cFi) + 0x454),
+    (void*)(((char*)cutHaveFavorToAsk__13daNpc_Pouya_cFi) + 0x554),
+};
+
+SECTION_DATA static void* lit_3818[3] = {
+    (void*)NULL,
+    (void*)0xFFFFFFFF,
+    (void*)cutHaveFavorToAsk__13daNpc_Pouya_cFi,
+};
+```
+
+Many of these are automatically generated by the compiler when your code is built, therefore these can be removed. You will want to ensure that the order of data in the TU still matches after these changes.
+
+Additionally, "weak functions" are also generated by the compiler and can be removed. Weak functions can generally be identified as small functions that are "out of place" in the TU you are working on, usually consisting of inline functions, constructors / destructors, and virtual functions.
+
+```cpp
+void daNpc_Pouya_c::CreateHeap() {
+    // NONMATCHING
+}
+
+// This is a weak function, generated by CreateHeap above
+// J3DTevKColorAnm::~J3DTevKColorAnm() {
+extern "C" void __dt__15J3DTevKColorAnmFv() {
+    // NONMATCHING
+}
+```
+
+Like before, you will need to ensure that function order matches after these changes. Note that weak function ordering with this compiler is not entirely understood yet, so if you don't manage to fix it entirely that's okay.
+
+Once the TU seems complete, you can try to switch it's configuration to `Matching` in configure.py.
+```cpp
+ActorRel(MatchingFor("GZ2E01"), "d_a_spinner"),
+```
+Run `ninja` again to ensure that everything builds OK. If the build fails, there may be more work to do first.
+
+If all functions in a TU are matching but the only issues that remain are data ordering or weak function ordering issues, you may mark the configuration as `Equivalent` instead.
+```cpp
+ActorRel(Equivalent, "d_a_nbomb"), # weak func order
+```
+
+After this you are free to open a Pull Request to the main repo where we will review it ASAP.

@@ -3,13 +3,13 @@
 
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
-const REPO_URL = 'https://github.com/zeldaret/tp';
+const REPO_URL = 'https://github.com/zsrtp';
 const DISCORD_URL = 'https://discord.zelda.deco.mp';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Twilight Princess Decompilation',
-  tagline: 'An ongoing reverse engineering project to reimplement the executable of Twilight Princess',
+  title: 'Twilight Princess Speedruns',
+  tagline: 'A hub for the Twilight Princess Speedrunning community',
   url: 'https://zsrtp.github.io',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
@@ -52,30 +52,59 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Twilight Princess Decompilation',
+        title: 'ZSR Twilight Princess',
         logo: {
-          alt: 'Twilight Princess Decompilation',
+          alt: 'ZSR Twilight Princess',
           src: 'img/logo.png',
           height: 32,
           width: 32,
         },
         items: [
           {
-            type: 'doc',
+            type: 'dropdown',
             position: 'left',
-            label: 'About',
-            docId: 'about',
+            label: 'Decomp',
+            items: [
+              {
+                label: 'About',
+                to: '/about',
+              },
+              {
+                label: 'Progress',
+                to: '/progress',
+              },
+              {
+                label: 'Contribute',
+                href: '/contribute',
+              },
+              {
+                label: 'GitHub',
+                href: 'https://www.github.com/zeldaret/tp',
+              },
+              {
+                label: 'Discord',
+                href: DISCORD_URL,
+              },
+            ],
           },
-          { to: '/progress', label: 'Progress', position: 'left' },
           {
-            type: 'doc',
+            href: 'https://tpgz.io/',
+            label: 'Practice Rom',
             position: 'left',
-            label: 'Contribute',
-            docId: 'contribute/index',
+          },
+          {
+            href: 'https://tprandomizer.com/',
+            label: 'Randomizer',
+            position: 'left',
+          },
+          {
+            href: 'https://zeldaspeedruns.com/tp',
+            label: 'ZeldaSpeedRuns',
+            position: 'left',
           },
           {
             href: REPO_URL,
-            label: 'GitHub',
+            label: 'ZSRTP GitHub',
             position: 'left',
           },
           {
@@ -87,10 +116,9 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-              { label: 'Decomp GitHub', href: REPO_URL },
+              { label: 'Speedrun Discord', href: 'https://discord.gg/tp' },
+              { label: 'Dev Discord', href: 'https://discord.gg/aZx8ZFcSPy' },
               { label: 'Website GitHub', href: 'https://github.com/zsrtp/tp-decomp-docs' },
-              { label: 'ZeldaRET', href: 'https://zelda.deco.mp' },
-              { label: 'ZeldaRET Discord', href: DISCORD_URL },
         ],
       },
       colorMode: {

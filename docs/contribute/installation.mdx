@@ -6,131 +6,73 @@ sidebar_position: 0
 
 Follow these steps to set up the project.
 
-## Set Up Dependencies
+## Setting up dependencies
+### Windows
 
-The following tools will be needed for the project:
+- Install [Python 3.10 or newer](https://www.python.org/downloads/) and add it to `%PATH%`
+- Download [ninja](https://github.com/ninja-build/ninja/releases) and add it to `%PATH%`
+  - Quick install via pip: `pip install ninja`
 
-* Python 3.10 or newer
-* Build-essential tools
+### macOS
 
-If you are using a distribution under Linux or WSL2, you will also need to install either **Wine** or **[WiBo](https://github.com/decompals/wibo)**.
+- Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages):
 
-You can install either WiBo or Wine but you should only install one of them. We recommend to install WiBo because it is faster and more lightweight.
+  ```sh
+  brew install ninja
+  ```
 
-If you are on MacOS (only intel-based ones), only install: 
+- Install [wine-crossover](https://github.com/Gcenx/homebrew-wine):
 
-* Wine (Install it with the MacOS step below)
+  ```sh
+  brew install --cask --no-quarantine gcenx/wine/wine-crossover
+  ```
 
-Linux/WSL2:
-```shell
-sudo apt install build-essential python3
-```
-And if you chose to install Wine instead of WiBo:
-```shell
-sudo dpkg --add-architecture i386
-```
-```shell
-sudo apt-get update
-```
-```shell
-sudo apt-get install wine wine32
+After OS upgrades, if macOS complains about `Wine Crossover.app` being unverified, you can unquarantine it using:
+
+```sh
+sudo xattr -rd com.apple.quarantine '/Applications/Wine Crossover.app'
 ```
 
-MacOS:
-```shell
-brew install python
-```
-```shell
-xcode-select --install
-```
-```shell
-brew cask install wine-stable
-```
+### Linux
+
+- Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages).
+- For non-x86(_64) platforms: Install wine from your package manager.
+  - For x86(_64), [wibo](https://github.com/decompals/wibo), a minimal 32-bit Windows binary wrapper, will be automatically downloaded and used.
 
 ## Setting Up The Repository
 
-1. Clone the repository and switch to it by running:
-```shell
-git clone https://github.com/zeldaret/tp.git && cd tp 
-```
+- Clone the repository:
 
-2. Place your copy of GameCube USA Twilight Princess in the root directory and call it `gz2e01.iso`
+  ```sh
+  git clone https://github.com/zeldaret/tp.git
+  ```
 
-3. Install the necessary python modules with following command:
-```shell
-python3 -m pip install --user -r tools/requirements.txt
-```
+- Copy your game disc image to `orig/GZ2E01`.
+  - Supported formats: ISO (GCM), RVZ, WIA, WBFS, CISO, NFS, GCZ, TGC.
+  - After the initial build, the disc image can be deleted to save space.
 
-4. Setup the project by executing the following command:
-```shell
-./tp setup
-```
+- Configure:
 
-5. Create the Expected directory (for diffing asm functions via diff.py):
-```shell
-./tp expected
-```
+  ```sh
+  python configure.py
+  ```
 
-## Building
-### Building a playable ROM
-To build a playable game, run:
-```shell
-make game
-```
+  To use a version other than `GZ2E01` (USA), specify it with `--version`.
+- Build:
 
-:::caution Note
-You can add the `-j#` argument where # is the amount of threads your system has in order to greatly speed up build times.
-```shell
-make game -j8
-```
-:::
+  ```sh
+  ninja
+  ```
 
-To make use of WiBo (if installed), append the environment variable like:
-```shell
-make game WINE=wibo
-```
+## Setting up Objdiff
 
-### Building the DOL
-To build the DOL (main executable), simply run make:
-```shell
-make
-``` 
+Objdiff is the tool we use to compare our compiled code to the expected original code.
 
-### Building the RELs
-To build the RELs (Relocatable code), add the `rels` parameter:
-```shell
-make rels
-``` 
+Download the latest release from [encounter/objdiff](https://github.com/encounter/objdiff). Under project settings, set `Project directory`. The configuration should be loaded automatically.
 
-### Extracting game assets
-To extract the game assets (non-code files) from your provided ROM, add the `assets` parameter:
+Select an object from the left sidebar to begin diffing. Changes to the project will rebuild automatically: changes to source files, headers, `configure.py`, `splits.txt` or `symbols.txt`.
 
-```shell
-make assets
-``` 
-
-### Cleanup
-To delete only your built DOL, add the `clean` parameter:
-```shell
-make clean
-``` 
-
-To delete only the built RELs, add the `clean_rels` parameter:
-```shell
-make clean_rels
-``` 
-
-To delete the built playable ROM, add the `clean_game` parameter:
-
-```shell
-make clean_game
-``` 
-
-To delete your entire build, add the `clean_all` parameter:
-
-```shell
-make clean_all
-``` 
+![](../../static/img/objdiff.png)
 
 ## Problems?
 
