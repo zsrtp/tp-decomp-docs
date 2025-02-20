@@ -1,7 +1,7 @@
 ---
 title: Coding Guidelines
 description: Guidelines for writing code
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 This project aims to be as readable and easy-to-understand as is possible towards the average programmer. As such, it is important to us that the coding style is kept consistent and clean across the entire project.
@@ -16,7 +16,7 @@ Clang Format will take care of most style choices, however there are other styli
 
 ## General
 
-- Lines should not be longer than 100 characters.
+- Lines should not be longer than roughly 100 characters.
 - Use 4 spaces to indent.
 - Use spaces with operators and keywords:
   - :heavy_check_mark: `if (x == 1 || x == 2)`
@@ -28,6 +28,7 @@ Clang Format will take care of most style choices, however there are other styli
     - :heavy_check_mark: `if ((foo && bar) || (x && y))`
     - :x: `if (foo && bar || x && y)`
         <br /> The parenthesis here aren't necessary, but improve readability due to operator precedence not being immediately obvious.
+- Use whitespace to separate blocks of code into more readable chunks.
 - Declare variables close to their usage point when possible.
 - Do not use `this->` with member variables unless it's absolutely necessary.
 

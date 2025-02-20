@@ -32,8 +32,8 @@ function formatSizeAsMb(sizeBytes, digits = 3) {
 
 export default function Progress() {
   const [totalCode, setTotalCode] = useState('?.???/??.??? MB - ??.???%');
-  const [dol, setDol] = useState('?.???/??.??? MB - ??.???%');
-  const [rels, setRels] = useState('?.???/??.??? MB - ??.???%');
+  const [totalData, setTotalData] = useState('?.???/??.??? MB - ??.???%');
+  const [fuzzyMatch, setFuzzyMatch] = useState('?.???/??.??? MB - ??.???%');
 
   const [entries, setEntries] = useState([]);
   const [chartData, setChartData] = useState(null);
@@ -46,8 +46,8 @@ export default function Progress() {
       const last = entries[0];
 
       setTotalCode(`${formatSizeAsMb(last.total_code.count)}/${formatSizeAsMb(last.total_code.size)} MB - ${formatProgress(last.total_code.count, last.total_code.size)}`);
-      setDol(`${formatSizeAsMb(last.dol.count)}/${formatSizeAsMb(last.dol.size)} MB - ${formatProgress(last.dol.count, last.dol.size)}`);
-      setRels(`${formatSizeAsMb(last.rels.count)}/${formatSizeAsMb(last.rels.size)} MB - ${formatProgress(last.rels.count, last.rels.size)}`);
+      setTotalData(`${formatSizeAsMb(last.total_data.count)}/${formatSizeAsMb(last.total_data.size)} MB - ${formatProgress(last.total_data.count, last.total_data.size)}`);
+      setFuzzyMatch(`${formatSizeAsMb(last.fuzzy_match.count)}/${formatSizeAsMb(last.fuzzy_match.size)} MB - ${formatProgress(last.fuzzy_match.count, last.fuzzy_match.size)}`);
 
       setChartData({
         datasets: [
@@ -106,8 +106,7 @@ export default function Progress() {
             const lines = [];
             lines.push('Total Code %: ' + formatProgress(entry.total_code.count, entry.total_code.size));
             if (item.datasetIndex === 1) return lines;
-            lines.push('main.dol: ' + formatProgress(entry.dol.count, entry.dol.size));
-            lines.push('RELs: ' + formatProgress(entry.rels.count, entry.rels.size));
+            lines.push('Total Data %: ' + formatProgress(entry.total_data.count, entry.total_data.size));
             lines.push('Commit: ' + entry.rev);
             return lines;
           },
@@ -124,11 +123,14 @@ export default function Progress() {
       <Head>
         <html className={clsx('container-tp-background')} id={styles.page} />
       </Head>
+      
       <div className={styles.container}>
         <h1>Decompilation Progress</h1>
+        <p>
+          <span style={{fontSize: '1rem'}}>Check out <a href="https://decomp.dev/zeldaret/tp">decomp.dev</a> for more detailed progress metrics!</span>
+        </p>
         <InfoRow title="Total Code" value={totalCode} />
-        <InfoRow title="main.dol" value={dol} secondLevel />
-        <InfoRow title="RELs" value={rels} secondLevel />
+        <InfoRow title="Total Data" value={totalData} />
         <div className="chart-container" style={{ marginTop: 30, minHeight: 300 }}>
           {chartData && (
             <Chart

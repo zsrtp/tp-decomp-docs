@@ -31,28 +31,32 @@ export default function Index() {
       <header className={styles.heroBanner}>
         <div className="container">
           <h2 className="hero__title" title="Current decompilation progress">
-            <Link to="/progress">
-            <span className="text-hilight">{progressText.data || "??.??%"}</span>
-            </Link>
+            <span className="text-hilight">Twilight Princess Speedrunning</span>
           </h2>
           <div className="row">
-            <Block title="What is this?">
-              <p>This is a reverse engineering project to decompile <i className="text-hilight">Twilight Princess</i> into human-readable and modifiable source code.</p>
+            <Block title="Join our community!">
+              <p>We have an active speedrunning community on Discord that's always happy to help newcomers.</p>
 
+              <Link
+                className="button button--secondary"
+                href='https://discord.gg/tp'>
+                Discord
+              </Link>
+            </Block>
+
+            <Block title="Check out our decomp project!">
+              <p>We have an ongoing reverse engineering project to decompile <i className="text-hilight">Twilight Princess</i> into human-readable and modifiable source code.</p>
+              <p>We gladly accept contributions! This is a group effort and every contribution helps.</p>
               <Link
                 className="button button--secondary"
                 to="/about">
                 Learn more
               </Link>
-            </Block>
-
-            <Block title="I want to help">
-              <p>We gladly accept contributions! This is a group effort and every contribution helps.</p>
-
               <Link
                 className="button button--secondary"
+                style={{ marginLeft: '1em' }}
                 to="/contribute">
-                Get started
+                Contributing
               </Link>
             </Block>
           </div>
